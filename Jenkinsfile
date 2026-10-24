@@ -1,23 +1,17 @@
+
 pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
-                git 'https://github.com/dornarajK/wweek5_LectureAssignment.git'
+                git 'https://github.com/dornarajK/OTP2_week1_Assignment.git'
             }
         }
 
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                bat 'mvn clean install'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'mvn test'
+                bat 'mvn clean verify'
             }
         }
 
