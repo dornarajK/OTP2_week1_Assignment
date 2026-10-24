@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/dornarajK/OTP2_week1_Assignment.git'
+                checkout scm
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Docker Login') {
+        stage('Docker Login and Push') {
             steps {
                 withCredentials([
                         usernamePassword(
@@ -49,13 +49,8 @@ pipeline {
                         )
                 ]) {
                     bat 'echo %DOCKER_PASSWORD%| docker login -u %DOCKER_USERNAME% --password-stdin'
+                    bat 'docker push dornarajk/temperature-converter:latest'
                 }
-            }
-        }
-
-        stage('Docker Push') {
-            steps {
-                bat 'docker push dornarajk/temperature-converter:latest'
             }
         }
     }
